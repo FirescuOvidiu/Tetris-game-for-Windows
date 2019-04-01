@@ -1,0 +1,4 @@
+﻿  Tetris.cpp
+c:\users\ovidiu\documents\visual studio 2017\projects\tetris\tetris\tetris.cpp(245): warning C4244: 'argument': conversion from 'double' to 'short', possible loss of data
+c:\users\ovidiu\documents\visual studio 2017\projects\tetris\tetris\tetris.cpp(246): warning C4244: 'argument': conversion from 'double' to 'short', possible loss of data
+  Tetris.vcxproj -> C:\Users\Ovidiu\Documents\Visual Studio 2017\Projects\Tetris\Debug\Tetris.exe
