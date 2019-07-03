@@ -1,5 +1,16 @@
 #include "Tile.h"
 
+Tile::Tile()
+{
+	for (int index = 0; index < 4; index++)
+	{
+		coordTile[index].setX(0);
+		coordTile[index].setY(0);
+	}
+
+	centerOfTile = -1;
+}
+
 Tile& Tile::operator=(const Tile &tile)
 {
 	if (this != &tile)
@@ -89,10 +100,10 @@ void Tile::rotateTileInADirection(char direction)
 
 	switch (direction)
 	{
-	case rotateRIGHT:           // to rotate the tile to the right we need +90* check formula down
+	case Action::rotateRIGHT:           // to rotate the tile to the right we need +90* check formula down
 		dir = 1;
 		break;
-	case rotateLEFT:           // to rotate the tile to the left we need -90* check formula down
+	case Action::rotateLEFT:           // to rotate the tile to the left we need -90* check formula down
 		dir = -1;
 		break;
 	default:

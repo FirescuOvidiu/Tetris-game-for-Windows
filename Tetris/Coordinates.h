@@ -4,7 +4,7 @@
 #define COORDINATES_H
 
 #include "Drawable.h"
-#include "Directions.h"
+#include "Actions.h"
 #include <iostream>
 
 using namespace std;

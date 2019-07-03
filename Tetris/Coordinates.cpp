@@ -45,13 +45,13 @@ void Coordinates::moveCoordinatesInADirection(char direction)
 {
 	switch (direction)
 	{
-	case moveLEFT:
+	case Direction::moveLEFT:
 		y--;
 		break;
-	case moveRIGHT:
+	case Direction::moveRIGHT:
 		y++;
 		break;
-	case moveDOWN:
+	case Direction::moveDOWN:
 		x++;
 		break;
 	default:

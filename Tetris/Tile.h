@@ -15,6 +15,7 @@ private:
 	Coordinates coordTile[4];
 	int centerOfTile;
 public:
+	Tile();
 	Tile& operator=(const Tile &tile);
 	void initializationOfTile(ifstream& input);
 	// Getter and setter
