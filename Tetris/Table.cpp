@@ -27,7 +27,7 @@ void Table::informationAboutGame()
 	cout << "\n\t e - rotate the tile right";
 	cout << "\n\t q - rotate the tile left";
 	cout << "\n\n\t When you are ready, press any key to start the game. Good luck ! ";
-	_getch();
+	(void)_getch();
 }
 
 void Table::generateRandomTile()
@@ -97,10 +97,10 @@ void Table::moveTileDownAutomatically()
 			time = time + 1;
 		}
 
-		if (checkIfCanMoveInADirection('s'))
+		if (checkIfCanMoveInADirection(Action::moveDOWN))
 		{
 			actualTile.DeleteDraw();
-			moveTileInADirection('s');
+			moveTileInADirection(Action::moveDOWN);
 			actualTile.Draw();
 		}
 		else {
@@ -144,7 +144,7 @@ void Table::possibleMoves(int &time)
 		}
 	}
 	// check if the player wanted to rotate the tile (right, left)
-	if ((direction == 'e') || (direction == 'q'))
+	if ((direction == Action::rotateRIGHT) || (direction == Action::rotateLEFT))
 	{
 		actualTile.DeleteDraw();
 		rotateTileInADirection(direction);
