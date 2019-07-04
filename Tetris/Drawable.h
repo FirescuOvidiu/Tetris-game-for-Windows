@@ -11,6 +11,7 @@ protected:
 	//The position where the table game will be displayed in console
 	static constexpr int startPositionX{ 10 };
 	static constexpr int startPositionY{ 25 };
+
 public:
 	static int getstartPositionX();
 	static void hidecursor();

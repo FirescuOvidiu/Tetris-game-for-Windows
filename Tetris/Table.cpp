@@ -3,7 +3,6 @@
 Table::Table()
 {
 	score = 0;
-	speedOfTiles = 500;
 
 	for (int currentLine = 0; currentLine < numberOfLines; currentLine++)
 	{
@@ -27,8 +26,23 @@ void Table::informationAboutGame()
 	cout << "\n\t s - move the tile down";
 	cout << "\n\t e - rotate the tile right";
 	cout << "\n\t q - rotate the tile left";
-	cout << "\n\n\t When you are ready, press any key to start the game. Good luck ! ";
-	(void)_getch();
+	cout << "\n\n\t The game has 3 difficulties: ";
+	cout << "\n\t 1. Easy";
+	cout << "\n\t 2. Normal";
+	cout << "\n\t 3. Hard";
+	cout << "\n\t 4. Impossible";
+	cout << "\n\n\t Introduce the number of the difficulty you want to play on and good luck: ";
+
+	char numberOfDifficulty = _getch();
+	
+	while ((numberOfDifficulty != '1') && (numberOfDifficulty != '2') && 
+		(numberOfDifficulty != '3') && (numberOfDifficulty!='4'))
+	{
+		cout << "\n\tIntroduceti un numar cuprins intre 1-4: ";
+		numberOfDifficulty = _getch();
+	}
+
+	Difficulty::setDifficulty(numberOfDifficulty);
 }
 
 void Table::generateRandomTile()
@@ -50,7 +64,32 @@ void Table::generateRandomTile()
 	}
 }
 
-void Table::deleteLineFromTable(int line)
+void Table::checkingAndDeletingCompletedLines()
+{
+	int check = 1;
+
+	for (int currentLine = 0; currentLine < numberOfLines; currentLine++)
+	{
+		check = 1;
+
+		for (int currentColumn = 0; currentColumn < numberOfColumns; currentColumn++)
+		{
+			if (table[currentLine][currentColumn] == 0)
+			{
+				check = 0;
+				break;
+			}
+		}
+
+		if (check)
+		{
+			deleteCompletedLineFromTable(currentLine);
+			score++;
+		}
+	}
+}
+
+void Table::deleteCompletedLineFromTable(int line)
 {
 	// Deleting the line which is completed
 	// This is done by replacing every line starting that line by the previous one
@@ -84,12 +123,12 @@ void Table::moveTileDownAutomatically()
 	//Moving the actual tile down every 0.5s and checking if the player wants to make a move(right, left, down) or rotate(right, left) the tile
 	actualTile.Draw();
 
-	int counterTime = 1;
+	int counterTime = 0;
 
 	do {
-		counterTime = 1;
+		counterTime = 0;
 
-		while (counterTime < speedOfTiles)
+		while (counterTime <= Difficulty::speedOfTiles)
 		{
 			if (_kbhit())             // if the player presses a key on keyboard
 			{
@@ -251,46 +290,32 @@ void Table::start()
 	DeleteDraw();
 	Draw();
 
-	int ok = 1;
-	int numberOfTilesPlayed = 20;
 	int counterNumberOfTilesPlayed = 0;
 
 	while (true)
 	{
 		// This while will end when the player will lose and the program will end
 		// checking if there is any line completed and needs to be deleted
-		for (int currentLine = 0; currentLine < numberOfLines; currentLine++)
-		{
-			ok = 1;
-
-			for (int currentColumn = 0; currentColumn < numberOfColumns; currentColumn++)
-			{
-				if (table[currentLine][currentColumn] == 0)
-				{
-					ok = 0;
-					break;
-				}
-			}
-			if (ok)
-			{
-				deleteLineFromTable(currentLine);
-				score++;
-			}
-		}
+		checkingAndDeletingCompletedLines();
 
 		generateRandomTile();
 
 		if (checkIfPlayerLost() == false)
 		{
 			moveTileDownAutomatically();
+
 			counterNumberOfTilesPlayed++;
-			if (counterNumberOfTilesPlayed == numberOfTilesPlayed)
+			if ((counterNumberOfTilesPlayed == Difficulty::increaseSpeedAfterXTilesPlayed)
+				&& (Difficulty::speedOfTiles > 20))
 			{
-				speedOfTiles = speedOfTiles - 400;
+
+				Difficulty::speedOfTiles = Difficulty::speedOfTiles - 20;
+				counterNumberOfTilesPlayed = 0;
 			}
 		}
-		else {
-			Drawable::MoveTo(numberOfLines + 1 + Drawable::startPositionX, 0);
+		else 
+		{
+			Drawable::MoveTo(Drawable::startPositionX + numberOfLines + 1, 0);
 			cout << "\n" << "Good job, you made " << score * 1000 << " points.\n";
 			break;
 		}

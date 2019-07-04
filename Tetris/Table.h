@@ -3,6 +3,7 @@
 #ifndef TABLE_H
 #define TABLE_H
 
+#include "Difficulty.h"
 #include "Tile.h"
 #include "Tiles.h"
 #include <conio.h>
@@ -18,13 +19,14 @@ private:
 	long score;
 	Tile actualTile;         // the tile that moves in the game table(the actual tile)
 	Tiles allTiles;         // the actual tile will be chosen random from all the tiles possible
-	int speedOfTiles;
+
 public:
 	Table();
 	long getScore();
 	void informationAboutGame();
 	void generateRandomTile();
-	void deleteLineFromTable(int line);        // after a line from the table is completated, it will be deleted from the game table and the score will rise
+	void checkingAndDeletingCompletedLines();
+	void deleteCompletedLineFromTable(int line);        // after a line from the table is completated, it will be deleted from the game table and the score will rise
 	void moveTileDownAutomatically();
 	void moveTileInADirection(char direction);
 	void possibleMoves(int &time);          // possible moves of a player (right, left, down)

@@ -15,6 +15,7 @@ private:
 	int x;
 	int y;
 	static constexpr char form{ '*' };
+
 public:
 	Coordinates(int x = 0, int y = 0);
 	Coordinates& operator =(const Coordinates &coord);

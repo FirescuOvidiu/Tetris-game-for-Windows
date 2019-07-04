@@ -11,6 +11,7 @@ class Tiles                 // class that represents the number of tiles the gam
 private:
 	int numberOfTiles;
 	Tile* figures;
+
 public:
 	Tiles();
 	void initializationOfTiles(ifstream& input);

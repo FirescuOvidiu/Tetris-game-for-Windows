@@ -14,6 +14,7 @@ private:
 	// Every tile is composed of 4 coordinates and a center
 	Coordinates coordTile[4];
 	int centerOfTile;
+
 public:
 	Tile();
 	Tile& operator=(const Tile &tile);
