@@ -18,7 +18,7 @@ private:
 	long score;
 	Tile actualTile;         // the tile that moves in the game table(the actual tile)
 	Tiles allTiles;         // the actual tile will be chosen random from all the tiles possible
-
+	int speedOfTiles;
 public:
 	Table();
 	long getScore();

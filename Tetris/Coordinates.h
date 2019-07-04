@@ -3,8 +3,8 @@
 #ifndef COORDINATES_H
 #define COORDINATES_H
 
-#include "Drawable.h"
 #include "Actions.h"
+#include "Drawable.h"
 #include <iostream>
 
 using namespace std;
@@ -15,15 +15,16 @@ private:
 	int x;
 	int y;
 	static constexpr char form{ '*' };
-	static constexpr int color{ 1 };
 public:
 	Coordinates(int x = 0, int y = 0);
 	Coordinates& operator =(const Coordinates &coord);
+	// Getter and Setter
 	static char getForm();
 	int getX();
 	int getY();
 	void setX(const int &x);
 	void setY(const int &y);
+	// Methods using a coordinate
 	void moveCoordinatesInADirection(char direction);
 	void Draw() override;
 	void DeleteDraw() override;

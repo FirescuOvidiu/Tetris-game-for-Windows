@@ -3,6 +3,7 @@
 Table::Table()
 {
 	score = 0;
+	speedOfTiles = 500;
 
 	for (int currentLine = 0; currentLine < numberOfLines; currentLine++)
 	{
@@ -83,18 +84,20 @@ void Table::moveTileDownAutomatically()
 	//Moving the actual tile down every 0.5s and checking if the player wants to make a move(right, left, down) or rotate(right, left) the tile
 	actualTile.Draw();
 
-	do {
-		int time = 1;
+	int counterTime = 1;
 
-		while (time < 500)
+	do {
+		counterTime = 1;
+
+		while (counterTime < speedOfTiles)
 		{
 			if (_kbhit())             // if the player presses a key on keyboard
 			{
-				possibleMoves(time);
+				possibleMoves(counterTime);
 			}
 
 			Sleep(1);
-			time = time + 1;
+			counterTime = counterTime + 1;
 		}
 
 		if (checkIfCanMoveInADirection(Action::moveDOWN))
@@ -128,7 +131,7 @@ void Table::moveTileInADirection(char direction)
 	}
 }
 
-void Table::possibleMoves(int &time)
+void Table::possibleMoves(int &counterTime)
 {
 	//Possible moves that can be effectuated on a tile ( move and rotate )
 	char direction = _getch();
@@ -138,9 +141,9 @@ void Table::possibleMoves(int &time)
 		actualTile.DeleteDraw();                  // delete old tile
 		moveTileInADirection(direction);          // move the tile in the direction the player wanted
 		actualTile.Draw();                        // draw the new tile
-		if (direction == 's')
+		if (direction == Action::moveDOWN)
 		{
-			time = 1;
+			counterTime = 1;
 		}
 	}
 	// check if the player wanted to rotate the tile (right, left)
@@ -249,6 +252,8 @@ void Table::start()
 	Draw();
 
 	int ok = 1;
+	int numberOfTilesPlayed = 20;
+	int counterNumberOfTilesPlayed = 0;
 
 	while (true)
 	{
@@ -275,9 +280,14 @@ void Table::start()
 
 		generateRandomTile();
 
-		if (checkIfPlayerLost() == true)
+		if (checkIfPlayerLost() == false)
 		{
 			moveTileDownAutomatically();
+			counterNumberOfTilesPlayed++;
+			if (counterNumberOfTilesPlayed == numberOfTilesPlayed)
+			{
+				speedOfTiles = speedOfTiles - 400;
+			}
 		}
 		else {
 			Drawable::MoveTo(numberOfLines + 1 + Drawable::startPositionX, 0);
@@ -296,28 +306,29 @@ void Table::DeleteDraw()
 void Table::Draw()
 {
 	// Method used to draw the table 
-	for (int i = -1; i <= numberOfLines; i++)
+	for (int index = -1; index <= numberOfLines; index++)
 	{
-		MoveTo(i + Drawable::startPositionX, -1 + Drawable::startPositionY);
+		MoveTo(Drawable::startPositionX + index, Drawable::startPositionY - 1);
 		cout << char(219);
-		MoveTo(i + Drawable::startPositionX, numberOfColumns + Drawable::startPositionY);
+		MoveTo(Drawable::startPositionX + index, Drawable::startPositionY + numberOfColumns);
 		cout << char(219);
 	}
-	for (int i = -1; i <= numberOfColumns; i++)
+
+	for (int index = -1; index <= numberOfColumns; index++)
 	{
-		Drawable::MoveTo(-1 + Drawable::startPositionX, i + Drawable::startPositionY);
+		Drawable::MoveTo(Drawable::startPositionX - 1, Drawable::startPositionY + index);
 		cout << char(219);
-		Drawable::MoveTo(numberOfLines + Drawable::startPositionX, i + Drawable::startPositionY);
+		Drawable::MoveTo(Drawable::startPositionX + numberOfLines, Drawable::startPositionY + index);
 		cout << char(219);
 	}
 }
 
 bool Table::belongsToActualTile(int x, int y)
 {
-	//Checking if a piece(point) of a tile belonds to the actual tile
-	for (int i = 0; i < 4; i++)
+	//Checking if a piece(point/coordinate) of a tile belonds to the actual tile
+	for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
 	{
-		if ((actualTile.getcoordX(i) == x) && (actualTile.getcoordY(i) == y))
+		if ((actualTile.getcoordX(currentCoordinate) == x) && (actualTile.getcoordY(currentCoordinate) == y))
 		{
 			return 0;
 		}
@@ -333,7 +344,7 @@ bool Table::checkIfCanMoveInADirection(char direction)
 		switch (direction)
 		{
 			// Check if the player can move left
-		case'a':
+		case Action::moveLEFT:
 			if ((actualTile.getcoordY(i) - 1 < 0) ||
 				((belongsToActualTile(actualTile.getcoordX(i), actualTile.getcoordY(i) - 1)) &&
 				(table[actualTile.getcoordX(i)][actualTile.getcoordY(i) - 1] == 1)))
@@ -342,7 +353,7 @@ bool Table::checkIfCanMoveInADirection(char direction)
 			}
 			break;
 			// Check if the player can move right
-		case'd':
+		case Action::moveRIGHT:
 			if ((actualTile.getcoordY(i) + 1 > numberOfColumns - 1) ||
 				((belongsToActualTile(actualTile.getcoordX(i), actualTile.getcoordY(i) + 1)) &&
 				(table[actualTile.getcoordX(i)][actualTile.getcoordY(i) + 1] == 1)))
@@ -351,7 +362,7 @@ bool Table::checkIfCanMoveInADirection(char direction)
 			}
 			break;
 			// Check if the player can move down
-		case's':
+		case Action::moveDOWN:
 			if ((actualTile.getcoordX(i) + 1 > numberOfLines - 1) ||
 				((belongsToActualTile(actualTile.getcoordX(i) + 1, actualTile.getcoordY(i))) &&
 				(table[actualTile.getcoordX(i) + 1][actualTile.getcoordY(i)] == 1)))
@@ -368,13 +379,13 @@ bool Table::checkIfCanMoveInADirection(char direction)
 
 bool Table::checkIfPlayerLost()
 {
-	for (int i = 0; i < 4; i++)
+	for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
 	{
-		if (table[actualTile.getcoordX(i)][actualTile.getcoordY(i)] == 1)
+		if (table[actualTile.getcoordX(currentCoordinate)][actualTile.getcoordY(currentCoordinate)] == 1)
 		{
-			return false;
+			return true;
 		}
 	}
 
-	return true;
+	return false;
 }

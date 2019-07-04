@@ -3,9 +3,9 @@
 #ifndef TILE_H
 #define TILE_H
 
-
-#include "Drawable.h"
 #include "Coordinates.h"
+#include "Drawable.h"
+#include <fstream>
 
 // Class that represents a tile and all its methods
 class Tile : public Drawable

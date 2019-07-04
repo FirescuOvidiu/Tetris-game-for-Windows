@@ -36,13 +36,15 @@ Tile& Tile::operator=(const Tile &tile)
 void Tile::initializationOfTile(ifstream& input)
 {
 	int counter = 0;
-	int check = 0;
+	int checkValue = 0;
 
 	for (int x = 0; x < 4; x++)
 	{
 		for (int y = 0; y < 4; y++)
 		{
-			if (check != 0)
+			input >> checkValue;
+
+			if (checkValue != 0)
 			{
 				coordTile[counter].setX(x);
 				coordTile[counter++].setY(y);
@@ -88,9 +90,9 @@ void Tile::setcenterOfTile(const int &centerOfTile)
 
 void Tile::moveTileInADirection(char direction)
 {
-	for (int i = 0; i < 4; i++)
+	for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
 	{
-		coordTile[i].moveCoordinatesInADirection(direction);
+		coordTile[currentCoordinate].moveCoordinatesInADirection(direction);
 	}
 }
 
@@ -120,13 +122,13 @@ void Tile::rotateTileInADirection(char direction)
 		double tileY = 0;
 
 		// Rotate every piece(point/coordinate) from the tile with 90*(to right) or -90*(to left) depends on dir
-		for (int i = 0; i < 4; i++)
+		for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
 		{
-			tileX = (double) coordTile[i].getX();
-			tileY = (double) coordTile[i].getY();
-			coordTile[i].setX((int)round((tileX - centerOfTileX)*cos((90 * 3.14*dir) / 180) + 
+			tileX = (double) coordTile[currentCoordinate].getX();
+			tileY = (double) coordTile[currentCoordinate].getY();
+			coordTile[currentCoordinate].setX((int)round((tileX - centerOfTileX)*cos((90 * 3.14*dir) / 180) + 
 				(tileY - centerOfTileY)*sin((90 * 3.14*dir) / 180) + centerOfTileX));
-			coordTile[i].setY((int)round((centerOfTileX - tileX)*sin((90 * 3.14*dir) / 180) +
+			coordTile[currentCoordinate].setY((int)round((centerOfTileX - tileX)*sin((90 * 3.14*dir) / 180) +
 				(tileY - centerOfTileY)*cos((90 * 3.14*dir) / 180) + centerOfTileY));
 		}
 	}
@@ -134,16 +136,16 @@ void Tile::rotateTileInADirection(char direction)
 
 void Tile::DeleteDraw()
 {
-	for (int i = 0; i < 4; i++)
+	for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
 	{
-		coordTile[i].DeleteDraw();      // Deleting the tile by deleting every piece(point/coordinate) of it
+		coordTile[currentCoordinate].DeleteDraw();      // Deleting the tile by deleting every piece(point/coordinate) of it
 	}
 }
 
 void Tile::Draw()
 {
-	for (int i = 0; i < 4; i++)
+	for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
 	{
-		coordTile[i].Draw();             // Drawing the tile by drawing every piece(point/coordinate) of it
+		coordTile[currentCoordinate].Draw();             // Drawing the tile by drawing every piece(point/coordinate) of it
 	}
 }
