@@ -3,6 +3,10 @@
 #ifndef ACTIONS_H
 #define ACTIONS_H
 
+/*
+	Possible actions that a player can do
+*/
+
 class Action
 {
 public:

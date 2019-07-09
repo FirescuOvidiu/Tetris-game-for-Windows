@@ -16,11 +16,6 @@ Coordinates& Coordinates::operator=(const Coordinates &coord)
 	return *this;
 }
 
-char Coordinates::getForm()
-{
-	return form;
-}
-
 int Coordinates::getX()
 {
 	return x;

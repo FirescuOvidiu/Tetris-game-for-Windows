@@ -2,6 +2,7 @@
 
 Table::Table()
 {
+	// When you start the game the table is empty and the score is 0
 	score = 0;
 
 	for (int currentLine = 0; currentLine < numberOfLines; currentLine++)
@@ -13,13 +14,10 @@ Table::Table()
 	}
 }
 
-long Table::getScore()
-{
-	return score;
-}
-
 void Table::informationAboutGame()
 {
+	// General informations about the game and setting the difficulty the player wants to play on
+
 	cout << "\n\n\n\t This is a tetris game.The controls for the game are:\n";
 	cout << "\n\t a - move the tile left";
 	cout << "\n\t d - move the tile right";
@@ -38,34 +36,16 @@ void Table::informationAboutGame()
 	while ((numberOfDifficulty != '1') && (numberOfDifficulty != '2') && 
 		(numberOfDifficulty != '3') && (numberOfDifficulty!='4'))
 	{
-		cout << "\n\tIntroduceti un numar cuprins intre 1-4: ";
+		cout << "\n\tInsert a number between 1-4: ";
 		numberOfDifficulty = _getch();
 	}
 
 	Difficulty::setDifficulty(numberOfDifficulty);
 }
 
-void Table::generateRandomTile()
-{
-	// generating a random tile from all the tiles possible and setting its coordinates for the game table
-
-	int randomTile;
-	random_device random;
-	uniform_int_distribution<int>dist(0, allTiles.getNumberOfTiles() - 1);
-
-	randomTile = dist(random);
-
-	actualTile = allTiles.getTile(randomTile);
-	actualTile.setcenterOfTile(allTiles.getTile(randomTile).getcenterOfTile(randomTile));
-
-	for (int i = 0; i < 4; i++)
-	{
-		actualTile.setcoordY(i, numberOfColumns / 2 - actualTile.getcoordY(i) + 2);
-	}
-}
-
 void Table::checkingAndDeletingCompletedLines()
 {
+	// We parse the table and check if there is any line with only 1 on it, and than we delete the line
 	int check = 1;
 
 	for (int currentLine = 0; currentLine < numberOfLines; currentLine++)
@@ -89,10 +69,11 @@ void Table::checkingAndDeletingCompletedLines()
 	}
 }
 
-void Table::deleteCompletedLineFromTable(int line)
+void Table::deleteCompletedLineFromTable(const int& line)
 {
 	// Deleting the line which is completed
-	// This is done by replacing every line starting that line by the previous one
+	// We need to actualize the table by replacing every line (starting from the completed line until the second line) with the previous lines
+	// Also we need to draw the actualized lines in the console
 	for (int currentLine = line; currentLine > 0; currentLine--)
 	{
 		for (int currentColumn = 0; currentColumn < numberOfColumns; currentColumn++)
@@ -103,7 +84,7 @@ void Table::deleteCompletedLineFromTable(int line)
 				cout << " ";
 			}
 			else {
-				cout << Coordinates::getForm();
+				cout << Coordinates::form;
 			}
 
 			table[currentLine][currentColumn] = table[currentLine - 1][currentColumn];
@@ -120,7 +101,7 @@ void Table::deleteCompletedLineFromTable(int line)
 
 void Table::moveTileDownAutomatically()
 {
-	//Moving the actual tile down every 0.5s and checking if the player wants to make a move(right, left, down) or rotate(right, left) the tile
+	//Moving the actual tile down every and checking if the player wants to make a move(right, left, down) or rotate(right, left) the tile
 	actualTile.Draw();
 
 	int counterTime = 0;
@@ -145,7 +126,8 @@ void Table::moveTileDownAutomatically()
 			moveTileInADirection(Action::moveDOWN);
 			actualTile.Draw();
 		}
-		else {
+		else 
+		{
 			break;
 		}
 	} while (true);
@@ -154,9 +136,9 @@ void Table::moveTileDownAutomatically()
 void Table::moveTileInADirection(char direction)
 {
 	// To move the tile in a direction we need to :
-	// - delete the previous tile from the game table by putting 0
+	// - delete the previous tile from the game table
 	// - move the tile to the new coordinates
-	// - actualizate the game table by putting 1 on its coordinates 
+	// - actualizate the game table
 	for (int i = 0; i < 4; i++)
 	{
 		table[actualTile.getcoordX(i)][actualTile.getcoordY(i)] = 0;
@@ -172,7 +154,7 @@ void Table::moveTileInADirection(char direction)
 
 void Table::possibleMoves(int &counterTime)
 {
-	//Possible moves that can be effectuated on a tile ( move and rotate )
+	//Possible moves that can be effectuated on a tile (move and rotate)
 	char direction = _getch();
 
 	if (checkIfCanMoveInADirection(direction))
@@ -182,6 +164,7 @@ void Table::possibleMoves(int &counterTime)
 		actualTile.Draw();                        // draw the new tile
 		if (direction == Action::moveDOWN)
 		{
+			// If we move the tile down we reset the counter until the tile moves again down by itself
 			counterTime = 1;
 		}
 	}
@@ -198,7 +181,7 @@ void Table::positioningTileInTableAfterRotation()
 {
 	// This method is used to check and correct a tile if it goes out of boundaries of the game table after a rotation
 	int index = 0;
-	int ok = 1;
+	int checkOutOfBoundaries = 0;
 
 	while (index < 4)
 	{
@@ -209,7 +192,7 @@ void Table::positioningTileInTableAfterRotation()
 			{
 				actualTile.setcoordY(j, actualTile.getcoordY(j) + 1);
 			}
-			ok = 0;
+			checkOutOfBoundaries = 1;
 		}
 
 		if (actualTile.getcoordY(index) > numberOfColumns - 1)
@@ -219,7 +202,7 @@ void Table::positioningTileInTableAfterRotation()
 			{
 				actualTile.setcoordY(j, actualTile.getcoordY(j) - 1);
 			}
-			ok = 0;
+			checkOutOfBoundaries = 1;
 		}
 
 		if (actualTile.getcoordX(index) < 0)
@@ -237,7 +220,7 @@ void Table::positioningTileInTableAfterRotation()
 					throw 0;
 				}
 			}
-			ok = 0;
+			checkOutOfBoundaries = 1;
 		}
 
 		if ((actualTile.getcoordX(index) > numberOfLines - 1) ||
@@ -248,15 +231,16 @@ void Table::positioningTileInTableAfterRotation()
 			{
 				actualTile.setcoordX(j, actualTile.getcoordX(j) - 1);
 			}
-			ok = 0;
+			checkOutOfBoundaries = 1;
 		}
 
-		if (ok == 0)
+		if (checkOutOfBoundaries == 1)
 		{
 			index = 0;
-			ok = 1;
+			checkOutOfBoundaries = 0;
 		}
-		else {
+		else 
+		{
 			index++;
 		}
 	}
@@ -265,9 +249,9 @@ void Table::positioningTileInTableAfterRotation()
 void Table::rotateTileInADirection(char direction)
 {
 	// To rotate the tile in a direction we need to :
-	// - delete the previous tile from the game table by putting 0
+	// - delete the previous tile from the game table
 	// - move the tile to the new coordinates and adjust it so it doesnt pass the boundaries of the game table
-	// - actualizate the game table by putting 1 on its coordinates
+	// - actualizate the game table
 	for (int i = 0; i < 4; i++)
 	{
 		table[actualTile.getcoordX(i)][actualTile.getcoordY(i)] = 0;
@@ -282,9 +266,9 @@ void Table::rotateTileInADirection(char direction)
 	}
 }
 
-void Table::start()
+void Table::startGame()
 {
-	Drawable::hidecursor();
+	Drawable::hideCursor();
 	informationAboutGame();
 
 	DeleteDraw();
@@ -292,26 +276,19 @@ void Table::start()
 
 	int counterNumberOfTilesPlayed = 0;
 
+	// This while will end when the player will lose
 	while (true)
 	{
-		// This while will end when the player will lose and the program will end
-		// checking if there is any line completed and needs to be deleted
 		checkingAndDeletingCompletedLines();
 
-		generateRandomTile();
+		actualTile = Tiles::generateRandomTile();
 
 		if (checkIfPlayerLost() == false)
 		{
 			moveTileDownAutomatically();
 
 			counterNumberOfTilesPlayed++;
-			if ((counterNumberOfTilesPlayed == Difficulty::increaseSpeedAfterXTilesPlayed)
-				&& (Difficulty::speedOfTiles > 20))
-			{
-
-				Difficulty::speedOfTiles = Difficulty::speedOfTiles - 20;
-				counterNumberOfTilesPlayed = 0;
-			}
+			Difficulty::increaseSpeedafterXTiles(counterNumberOfTilesPlayed);
 		}
 		else 
 		{
@@ -320,12 +297,6 @@ void Table::start()
 			break;
 		}
 	}
-}
-
-void Table::DeleteDraw()
-{
-	// Method used to delete the table
-	system("cls");
 }
 
 void Table::Draw()
@@ -348,18 +319,25 @@ void Table::Draw()
 	}
 }
 
-bool Table::belongsToActualTile(int x, int y)
+
+void Table::DeleteDraw()
+{
+	// Method used to delete the table
+	system("cls");
+}
+
+bool Table::belongsToActualTile(const int& x, const int& y)
 {
 	//Checking if a piece(point/coordinate) of a tile belonds to the actual tile
 	for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
 	{
 		if ((actualTile.getcoordX(currentCoordinate) == x) && (actualTile.getcoordY(currentCoordinate) == y))
 		{
-			return 0;
+			return false;
 		}
 	}
 
-	return 1;
+	return true;
 }
 
 bool Table::checkIfCanMoveInADirection(char direction)
@@ -374,7 +352,7 @@ bool Table::checkIfCanMoveInADirection(char direction)
 				((belongsToActualTile(actualTile.getcoordX(i), actualTile.getcoordY(i) - 1)) &&
 				(table[actualTile.getcoordX(i)][actualTile.getcoordY(i) - 1] == 1)))
 			{
-				return 0;
+				return false;
 			}
 			break;
 			// Check if the player can move right
@@ -383,7 +361,7 @@ bool Table::checkIfCanMoveInADirection(char direction)
 				((belongsToActualTile(actualTile.getcoordX(i), actualTile.getcoordY(i) + 1)) &&
 				(table[actualTile.getcoordX(i)][actualTile.getcoordY(i) + 1] == 1)))
 			{
-				return 0;
+				return false;
 			}
 			break;
 			// Check if the player can move down
@@ -392,14 +370,14 @@ bool Table::checkIfCanMoveInADirection(char direction)
 				((belongsToActualTile(actualTile.getcoordX(i) + 1, actualTile.getcoordY(i))) &&
 				(table[actualTile.getcoordX(i) + 1][actualTile.getcoordY(i)] == 1)))
 			{
-				return 0;
+				return false;
 			}
 			break;
 		default:
 			break;
 		}
 	}
-	return 1;
+	return true;
 }
 
 bool Table::checkIfPlayerLost()

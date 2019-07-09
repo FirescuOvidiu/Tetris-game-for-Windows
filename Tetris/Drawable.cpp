@@ -5,7 +5,7 @@ int Drawable::getstartPositionX()
 	return startPositionX;
 }
 
-void Drawable::hidecursor()
+void Drawable::hideCursor()
 {
 	CONSOLE_CURSOR_INFO info = { 100,FALSE };
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &info);

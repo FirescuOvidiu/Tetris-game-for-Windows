@@ -29,8 +29,8 @@ public:
 	// Methods using a tile
 	void moveTileInADirection(char direction);          // Moves the tile in a specific direction (right, left, down)
 	void rotateTileInADirection(char direction);       // Rotates the tile in a specific direction (right, left)
-	void DeleteDraw() override;                       // Overrides function DeleteDraw() from Drawable() and is used to delete the tile from the game table
-	void Draw() override;                            // Overrides function Draw() from Drawable() and is used to draw the tile in the game table
+	void Draw() override;                             // Overrides function Draw() from Drawable() and is used to draw the tile in the game table
+	void DeleteDraw() override;                      // Overrides function DeleteDraw() from Drawable() and is used to delete the tile from the game table
 };
 
 #endif // !TILE_H

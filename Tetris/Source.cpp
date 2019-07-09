@@ -5,11 +5,12 @@ int main()
 	Table a;
 
 	try {
-		a.start();
+		a.startGame();
 	}
 	catch (...) 
 	{
+		// In case player loses
 		Drawable::MoveTo(Drawable::getstartPositionX() + Table::numberOfLines + 1, 0);
-		cout << "\n" << "Good job, you made " << a.getScore() * 1000 << " points.\n";
+		cout << "\n" << "Good job, you made " << a.score * 1000 << " points.\n";
 	}
 }

@@ -1,4 +1,5 @@
 #include "Tile.h"
+#include "Table.h"
 
 Tile::Tile()
 {
@@ -19,7 +20,9 @@ Tile& Tile::operator=(const Tile &tile)
 		{
 			this->coordTile[i] = tile.coordTile[i];
 		}
+		this->centerOfTile = tile.centerOfTile;
 	}
+
 	return *this;
 }
 
@@ -30,7 +33,7 @@ Tile& Tile::operator=(const Tile &tile)
 		0 0 0 0
 		0 0 0 0
 	A tile stores has a array of 4 coordinates(Coordinates) and a center(int)
-	In the array we will save the 4 coordinates ((0,3) (1,1) (1,2) (1,3)) that don't have the value 0 in matrix, and in the center the center of the figure
+	In the array we will save the 4 coordinates ((0,3) (1,1) (1,2) (1,3)) that don't have the value 0 in matrix, and in the centerOfTile the center of the figure
 */
 
 void Tile::initializationOfTile(ifstream& input)
@@ -47,7 +50,7 @@ void Tile::initializationOfTile(ifstream& input)
 			if (checkValue != 0)
 			{
 				coordTile[counter].setX(x);
-				coordTile[counter++].setY(y);
+				coordTile[counter++].setY(Table::numberOfColumns / 2 + 2 - y);	// Setting the coordinate for Y in the middle of the table
 
 				if ((x == 1) && (y == 2))
 				{
@@ -103,10 +106,10 @@ void Tile::rotateTileInADirection(char direction)
 	switch (direction)
 	{
 	case Action::rotateRIGHT:           // to rotate the tile to the right we need +90* check formula down
-		dir = 1;
+		dir = +90;
 		break;
 	case Action::rotateLEFT:           // to rotate the tile to the left we need -90* check formula down
-		dir = -1;
+		dir = -90;
 		break;
 	default:
 		return;
@@ -126,19 +129,12 @@ void Tile::rotateTileInADirection(char direction)
 		{
 			tileX = (double) coordTile[currentCoordinate].getX();
 			tileY = (double) coordTile[currentCoordinate].getY();
-			coordTile[currentCoordinate].setX((int)round((tileX - centerOfTileX)*cos((90 * 3.14*dir) / 180) + 
-				(tileY - centerOfTileY)*sin((90 * 3.14*dir) / 180) + centerOfTileX));
-			coordTile[currentCoordinate].setY((int)round((centerOfTileX - tileX)*sin((90 * 3.14*dir) / 180) +
-				(tileY - centerOfTileY)*cos((90 * 3.14*dir) / 180) + centerOfTileY));
-		}
-	}
-}
 
-void Tile::DeleteDraw()
-{
-	for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
-	{
-		coordTile[currentCoordinate].DeleteDraw();      // Deleting the tile by deleting every piece(point/coordinate) of it
+			coordTile[currentCoordinate].setX((int)round((tileX - centerOfTileX) * cos((3.14 * dir) / 180) +
+				(tileY - centerOfTileY) * sin((3.14 * dir) / 180) + centerOfTileX));
+			coordTile[currentCoordinate].setY((int)round((centerOfTileX - tileX) * sin((3.14 * dir) / 180) +
+				(tileY - centerOfTileY) * cos((3.14 * dir) / 180) + centerOfTileY));
+		}
 	}
 }
 
@@ -146,6 +142,14 @@ void Tile::Draw()
 {
 	for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
 	{
-		coordTile[currentCoordinate].Draw();             // Drawing the tile by drawing every piece(point/coordinate) of it
+		coordTile[currentCoordinate].Draw();             // Drawing the tile by drawing every piece (point/coordinate) of it
+	}
+}
+
+void Tile::DeleteDraw()
+{
+	for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
+	{
+		coordTile[currentCoordinate].DeleteDraw();      // Deleting the tile by deleting every piece (point/coordinate) of it
 	}
 }

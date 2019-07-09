@@ -29,3 +29,14 @@ void Difficulty::setDifficulty(char numberOfDifficulty)
 		break;
 	}
 }
+
+void Difficulty::increaseSpeedafterXTiles(int& counterNumberOfTilesPlayed)
+{
+	if ((counterNumberOfTilesPlayed == Difficulty::increaseSpeedAfterXTilesPlayed)
+		&& (Difficulty::speedOfTiles > 20))
+	{
+
+		Difficulty::speedOfTiles = Difficulty::speedOfTiles - 20;
+		counterNumberOfTilesPlayed = 0;
+	}
+}

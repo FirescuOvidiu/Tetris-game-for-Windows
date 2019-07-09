@@ -14,13 +14,12 @@ class Coordinates : public Drawable
 private:
 	int x;
 	int y;
+public:
 	static constexpr char form{ '*' };
 
 public:
 	Coordinates(int x = 0, int y = 0);
 	Coordinates& operator =(const Coordinates &coord);
-	// Getter and Setter
-	static char getForm();
 	int getX();
 	int getY();
 	void setX(const int &x);

@@ -11,5 +11,6 @@ public:
 
 public:
 	static void setDifficulty(char numberOfDifficulty);
+	static void increaseSpeedafterXTiles(int& counterNumberOfTilesPlayed);
 };
 #endif // !DIFFICULTY_H

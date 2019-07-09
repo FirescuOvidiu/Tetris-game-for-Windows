@@ -14,7 +14,7 @@ protected:
 
 public:
 	static int getstartPositionX();
-	static void hidecursor();
+	static void hideCursor();
 	static void MoveTo(const int &x,const int &y);
 	virtual void Draw() = 0;
 	virtual void DeleteDraw() = 0;

@@ -5,19 +5,21 @@
 
 #include "Tile.h"
 #include <fstream>
+#include <random>
 
-class Tiles                 // class that represents the number of tiles the game has and all tiles
+class Tiles                 // Contains the number of tiles and the tiles possible
 {
 private:
-	int numberOfTiles;
-	Tile* figures;
+	static int numberOfTiles;
+	static Tile* figures;
+
+private:
+	static int initializationOfNumberOfTiles();
+	static Tile* initializationOfFigures();
+	~Tiles();
 
 public:
-	Tiles();
-	void initializationOfTiles(ifstream& input);
-	Tile getTile(int number);
-	int getNumberOfTiles();
-	~Tiles();
+	static Tile generateRandomTile();
 };
 
 #endif // !TILES_H
