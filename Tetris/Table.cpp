@@ -170,7 +170,49 @@ void Table::possibleMoves(int &counterTime)
 	}
 }
 
-void Table::positioningTileAfterRotation()
+void Table::moveTileToLastPosition(char direction)
+{
+	if (direction == Action::rotateLEFT)
+	{
+		direction = Action::rotateRIGHT;
+	}
+	else
+	{
+		direction = Action::rotateLEFT;
+	}
+
+	actualTile.rotateTile(direction);
+
+	int check = 0;
+
+	while (true)
+	{
+		check = 0;
+
+		for (int j = 0; j < 4; j++)
+		{
+			if ((actualTile.getcoordX(j) < 0) || (table[actualTile.getcoordX(j)][actualTile.getcoordY(j)] == 1))
+			{
+				check = 1;
+				break;
+			}
+		}
+
+		if (check)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				actualTile.setcoordX(j, actualTile.getcoordX(j) + 1);
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+}
+
+void Table::repositioningTile(char direction)
 {
 	// This method is used to check and correct a tile if it goes out of boundaries of the game table after a rotation
 	int index = 0;
@@ -178,6 +220,34 @@ void Table::positioningTileAfterRotation()
 
 	while (index < 4)
 	{
+		if (actualTile.getcoordX(index) < 0)
+		{
+			// Passed top boundary of the game table
+			for (int j = 0; j < 4; j++)
+			{
+				moveTileToLastPosition(direction);
+				return;
+			}
+
+			for (int j = 0; j < 4; j++)
+			{
+				actualTile.setcoordX(j, actualTile.getcoordX(j) + 1);
+			}
+
+			checkOutOfBoundaries = 1;
+		}
+
+		if ((actualTile.getcoordX(index) > numberOfLines - 1) ||
+			(table[actualTile.getcoordX(index)][actualTile.getcoordY(index)] == 1))
+		{
+			// Passed the down boundary or reached a possition that is occupied
+			for (int j = 0; j < 4; j++)
+			{
+				actualTile.setcoordX(j, actualTile.getcoordX(j) - 1);
+			}
+			checkOutOfBoundaries = 1;
+		}
+
 		if (actualTile.getcoordY(index) < 0)
 		{
 			// Passed left boundary of the game table
@@ -194,35 +264,6 @@ void Table::positioningTileAfterRotation()
 			for (int j = 0; j < 4; j++)
 			{
 				actualTile.setcoordY(j, actualTile.getcoordY(j) - 1);
-			}
-			checkOutOfBoundaries = 1;
-		}
-
-		if (actualTile.getcoordX(index) < 0)
-		{
-			// Passed top boundary of the game table and there are cases where the player loses
-			for (int j = 0; j < 4; j++)
-			{
-				actualTile.setcoordX(j, actualTile.getcoordX(j) + 1);
-			}
-
-			for (int j = 0; j < 4; j++)
-			{
-				if ((actualTile.getcoordX(j) > 0) && (table[actualTile.getcoordX(j)][actualTile.getcoordY(j)] == 1))
-				{
-					throw 0;
-				}
-			}
-			checkOutOfBoundaries = 1;
-		}
-
-		if ((actualTile.getcoordX(index) > numberOfLines - 1) ||
-			(table[actualTile.getcoordX(index)][actualTile.getcoordY(index)] == 1))
-		{
-			// Passed the down boundary or reached a possition that is occupied
-			for (int j = 0; j < 4; j++)
-			{
-				actualTile.setcoordX(j, actualTile.getcoordX(j) - 1);
 			}
 			checkOutOfBoundaries = 1;
 		}
@@ -251,7 +292,7 @@ void Table::rotateTile(char direction)
 	}
 
 	actualTile.rotateTile(direction);
-	positioningTileAfterRotation();
+	repositioningTile(direction);
 
 	for (int i = 0; i < 4; i++)
 	{

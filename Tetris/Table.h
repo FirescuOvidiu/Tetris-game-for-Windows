@@ -21,7 +21,8 @@ public:
 	void moveTile(char direction);
 	void possibleMoves(int& counterTime);
 	
-	void positioningTileAfterRotation();
+	void moveTileToLastPosition(char direction);
+	void repositioningTile(char direction);
 	void rotateTile(char direction);
 	
 	void startGame();
