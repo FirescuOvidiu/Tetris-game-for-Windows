@@ -25,8 +25,9 @@ void Tile::initTile(std::ifstream& input)
 
 			if (checkValue != 0)
 			{
-				coordTile[counter].setX(x);
-				coordTile[counter++].setY(Table::numberOfColumns / 2 + 2 - y);	// Setting the coordinate for Y in the middle of the table
+				coordTile.at(counter).setX(x);
+				coordTile.at(counter).setY(Table::numberOfColumns / 2 + 2 - y);	// Setting the coordinate for Y in the middle of the table
+				counter++;
 
 				if ((x == 1) && (y == 2))
 				{
