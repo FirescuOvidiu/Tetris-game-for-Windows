@@ -7,7 +7,6 @@
 #include <fstream>
 #include <vector>
 
-// Class that represents a tileand all its methods
 class Tile : public Drawable
 {
 public:

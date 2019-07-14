@@ -11,7 +11,6 @@ using namespace std;
 void Table::gameInfo() const
 {
 	// General informations about the game and setting the difficulty the player wants to play on
-
 	cout << "\n\n\n\t This is a tetris game.The controls for the game are:\n";
 	cout << "\n\t a - move the tile left";
 	cout << "\n\t d - move the tile right";
@@ -39,7 +38,7 @@ void Table::gameInfo() const
 
 void Table::deleteCompletedLines()
 {
-	// We parse the table and check if there is any line with only 1 on it, and than we delete the line
+	// We parse the table and check if there is any line with only 1, and than we delete the line if it has only 1
 	int check = 1;
 
 	for (int currentLine = 0; currentLine < numberOfLines; currentLine++)
@@ -95,7 +94,7 @@ void Table::deleteCompletedLine(int line)
 
 void Table::moveTileDown()
 {
-	//Moving the actual tile down every and checking if the player wants to make a move(right, left, down) or rotate(right, left) the tile
+	// Moving the actual tile down every and checking if the player wants to make a move(right, left, down) or rotate(right, left) the tile
 	actualTile.draw();
 
 	int counterTime = 0;
@@ -148,21 +147,21 @@ void Table::moveTile(char direction)
 
 void Table::possibleMoves(int &counterTime)
 {
-	//Possible moves that can be effectuated on a tile (move and rotate)
+	// Possible moves that can be effectuated on a tile (move and rotate)
 	char direction = _getch();
 
 	if (checkIfCanMove(direction))
 	{
-		actualTile.deleteDraw();                  // delete old tile
-		moveTile(direction);					 // move the tile in the direction the player wanted
-		actualTile.draw();                      // draw the new tile
+		actualTile.deleteDraw();                  // Delete old tile
+		moveTile(direction);					 // Move the tile in the direction the player wanted
+		actualTile.draw();                      // Draw the new tile
 		if (direction == Action::moveDOWN)
 		{
 			// If we move the tile down we reset the counter until the tile moves again down by itself
 			counterTime = 1;
 		}
 	}
-	// check if the player wanted to rotate the tile (right, left)
+	// Check if the player wanted to rotate the tile (right, left)
 	if ((direction == Action::rotateRIGHT) || (direction == Action::rotateLEFT))
 	{
 		actualTile.deleteDraw();
@@ -181,7 +180,7 @@ void Table::positioningTileAfterRotation()
 	{
 		if (actualTile.getcoordY(index) < 0)
 		{
-			// passed left boundary of the game table
+			// Passed left boundary of the game table
 			for (int j = 0; j < 4; j++)
 			{
 				actualTile.setcoordY(j, actualTile.getcoordY(j) + 1);
@@ -191,7 +190,7 @@ void Table::positioningTileAfterRotation()
 
 		if (actualTile.getcoordY(index) > numberOfColumns - 1)
 		{
-			// passed right boundary of the game table
+			// Passed right boundary of the game table
 			for (int j = 0; j < 4; j++)
 			{
 				actualTile.setcoordY(j, actualTile.getcoordY(j) - 1);
@@ -201,7 +200,7 @@ void Table::positioningTileAfterRotation()
 
 		if (actualTile.getcoordX(index) < 0)
 		{
-			// passed top boundary of the game table and there are cases where the player loses
+			// Passed top boundary of the game table and there are cases where the player loses
 			for (int j = 0; j < 4; j++)
 			{
 				actualTile.setcoordX(j, actualTile.getcoordX(j) + 1);
@@ -220,7 +219,7 @@ void Table::positioningTileAfterRotation()
 		if ((actualTile.getcoordX(index) > numberOfLines - 1) ||
 			(table[actualTile.getcoordX(index)][actualTile.getcoordY(index)] == 1))
 		{
-			// passed the down boundary or reached a possition that is occupied
+			// Passed the down boundary or reached a possition that is occupied
 			for (int j = 0; j < 4; j++)
 			{
 				actualTile.setcoordX(j, actualTile.getcoordX(j) - 1);
@@ -321,8 +320,8 @@ void Table::deleteDraw()
 
 bool Table::belongsToActualTile(int x, int y) const
 {
-	//Checking if a piece(point/coordinate) of a tile belonds to the actual tile
-	//We do this so we don't have tiles colliding with each other
+	// Checking if a piece(point/coordinate) of a tile belonds to the actual tile
+	// We do this so we don't have tiles colliding with each other
 	for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
 	{
 		if ((actualTile.getcoordX(currentCoordinate) == x) && (actualTile.getcoordY(currentCoordinate) == y))

@@ -81,10 +81,10 @@ void Tile::rotateTile(char direction)
 
 	switch (direction)
 	{
-	case Action::rotateRIGHT:           // to rotate the tile to the right we need +90* check formula down
+	case Action::rotateRIGHT:           // To rotate the tile to the right we need +90* check formula down
 		dir = +90;
 		break;
-	case Action::rotateLEFT:           // to rotate the tile to the left we need -90* check formula down
+	case Action::rotateLEFT:           // To rotate the tile to the left we need -90* check formula down
 		dir = -90;
 		break;
 	default:

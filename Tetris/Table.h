@@ -6,7 +6,8 @@
 #include "Drawable.h"
 #include "Tile.h"
 
-// class that represents the game table 
+// Class that represents the game table 
+
 class Table : public Drawable
 {
 public:
@@ -39,8 +40,8 @@ public:
 	long score;
 
 private:
-	std::vector<std::vector<int>> table;					// the game table = a matrix with 0 if there is nothing draw in that point and 1 if there is something draw 
-	Tile actualTile;									 // the tile that moves in the game table(the actual tile)
+	std::vector<std::vector<int>> table;					// The game table = a matrix with 0 if there is nothing draw in that point and 1 if there is something draw 
+	Tile actualTile;									 // The tile that moves in the game table(the actual tile)
 };
 
 #endif // !TABLE_H

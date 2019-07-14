@@ -15,7 +15,7 @@ public:
 	virtual void deleteDraw() = 0;
 
 protected:
-	//The position where the table game will be displayed in console
+	// The position where the table game will be displayed in console
 	static constexpr int startX{ 10 };
 	static constexpr int startY{ 25 };
 

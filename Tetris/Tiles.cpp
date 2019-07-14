@@ -32,7 +32,7 @@ vector<Tile> Tiles::initFigures()
 		figures.at(currentTile).initTile(input);
 	}
 
-	//The center of a line respectively a square is different than the other figures
+	// The center of a line respectively a square is different than the other figures
 	figures.at(0).setcenterOfTile(2);
 	figures.at(3).setcenterOfTile(-1);
 

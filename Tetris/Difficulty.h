@@ -12,22 +12,22 @@ namespace Difficulty
 	{
 		switch (numberOfDifficulty)
 		{
-			//Easy
+			// Easy
 		case '1':
 			incSpeedAfterXTilesPlayed = 20;
 			speedOfTiles = 600;
 			break;
-			//Normal
+			// Normal
 		case '2':
 			incSpeedAfterXTilesPlayed = 15;
 			speedOfTiles = 400;
 			break;
-			//Hard
+			// Hard
 		case '3':
 			incSpeedAfterXTilesPlayed = 10;
 			speedOfTiles = 200;
 			break;
-			//Impossible
+			// Impossible
 		case '4':
 			incSpeedAfterXTilesPlayed = 5;
 			speedOfTiles = 100;
