@@ -21,14 +21,17 @@ public:
 	void moveTile(char direction);
 	void possibleMoves(int& counterTime);
 	
+	// There are situations where a tile can't be rotate, after we rotate it we check if the rotation was valid
+	// If it wasn't moveTileToLastPosition will change the tile coordinates to his original coordinates before rotation 
+	// Than the tile is drawn in console
 	void moveTileToLastPosition(char direction);
 	void repositioningTile(char direction);
 	void rotateTile(char direction);
 	
 	void startGame();
 	
-	void draw();
-	void deleteDraw();
+	void draw() override;
+	void deleteDraw() override;
 	
 	bool belongsToActualTile(int x, int y) const;
 	
