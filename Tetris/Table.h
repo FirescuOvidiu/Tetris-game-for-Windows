@@ -10,7 +10,7 @@
 class Table : public Drawable
 {
 public:
-	Table();
+	Table() : score(0), table(numberOfLines, std::vector<int>(numberOfColumns)) {}
 	void gameInfo() const;
 
 	void deleteCompletedLines();
@@ -39,9 +39,8 @@ public:
 	long score;
 
 private:
-	int table[numberOfLines][numberOfColumns];            // the game table = a matrix with 0 if there is nothing draw in that point and 1 if there is something draw 
+	std::vector<std::vector<int>> table;					// the game table = a matrix with 0 if there is nothing draw in that point and 1 if there is something draw 
 	Tile actualTile;									 // the tile that moves in the game table(the actual tile)
-
 };
 
 #endif // !TABLE_H

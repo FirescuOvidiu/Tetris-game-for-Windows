@@ -8,17 +8,6 @@
 
 using namespace std;
 
-Table::Table(): score(0)
-{
-	for (int currentLine = 0; currentLine < numberOfLines; currentLine++)
-	{
-		for (int currentColumn = 0; currentColumn < numberOfColumns; currentColumn++)
-		{
-			table[currentLine][currentColumn] = 0;
-		}
-	}
-}
-
 void Table::gameInfo() const
 {
 	// General informations about the game and setting the difficulty the player wants to play on

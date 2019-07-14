@@ -13,12 +13,11 @@ public:
 
 private:
 	static int initNumberOfTiles();
-	static Tile* initFigures();
-	~Tiles();
+	static std::vector<Tile> initFigures();
 
 private:
 	static int numberOfTiles;
-	static Tile* figures;
+	static std::vector<Tile> figures;
 };
 
 #endif // !TILES_H

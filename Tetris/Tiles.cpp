@@ -5,36 +5,36 @@
 using namespace std;
 
 int Tiles::numberOfTiles = initNumberOfTiles();
-Tile* Tiles::figures = initFigures();
+vector<Tile> Tiles::figures = initFigures();
 
 int Tiles::initNumberOfTiles()
 {
-	int numberOfTiles = 0;
-
+	int numberOfTiles{ 0 };
 	ifstream input("tiles.in");
+
 	input >> numberOfTiles;
+
 	input.close();
 
 	return numberOfTiles;
 }
 
-Tile* Tiles::initFigures()
+vector<Tile> Tiles::initFigures()
 {
-	Tile* figures;
-	int numberOfTiles = 0;
-
 	ifstream input("tiles.in");
-	input >> numberOfTiles;
-	figures = new Tile[numberOfTiles];
+	int numberOfTiles{};
 
+	input >> numberOfTiles;
+
+	vector<Tile> figures(numberOfTiles);
 	for (int currentTile = 0; currentTile < numberOfTiles; currentTile++)
 	{
-		figures[currentTile].initTile(input);
+		figures.at(currentTile).initTile(input);
 	}
 
 	//The center of a line respectively a square is different than the other figures
-	figures[0].setcenterOfTile(2);
-	figures[3].setcenterOfTile(-1);
+	figures.at(0).setcenterOfTile(2);
+	figures.at(3).setcenterOfTile(-1);
 
 	input.close();
 
@@ -43,7 +43,7 @@ Tile* Tiles::initFigures()
 
 Tile Tiles::generateRandomTile()
 {
-	Tile randomTile;
+	Tile randomTile{};
 	int randomNumber = 0;
 
 	random_device random;
@@ -53,9 +53,4 @@ Tile Tiles::generateRandomTile()
 	randomTile = figures[randomNumber];
 
 	return randomTile;
-}
-
-Tiles::~Tiles()
-{
-	delete[] figures;
 }
