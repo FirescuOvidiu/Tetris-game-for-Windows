@@ -1,5 +1,6 @@
-#include "Tile.h"
+#include "Actions.h"
 #include "Table.h"
+#include <fstream>
 
 Tile::Tile()
 {
@@ -12,20 +13,6 @@ Tile::Tile()
 	centerOfTile = -1;
 }
 
-Tile& Tile::operator=(const Tile &tile)
-{
-	if (this != &tile)
-	{
-		for (int i = 0; i < 4; i++)
-		{
-			this->coordTile[i] = tile.coordTile[i];
-		}
-		this->centerOfTile = tile.centerOfTile;
-	}
-
-	return *this;
-}
-
 /*
 	A tile is in tiles.in is saved like this:
 		0 0 0 2
@@ -36,7 +23,7 @@ Tile& Tile::operator=(const Tile &tile)
 	In the array we will save the 4 coordinates ((0,3) (1,1) (1,2) (1,3)) that don't have the value 0 in matrix, and in the centerOfTile the center of the figure
 */
 
-void Tile::initializationOfTile(ifstream& input)
+void Tile::initTile(ifstream& input)
 {
 	int counter = 0;
 	int checkValue = 0;
@@ -61,45 +48,45 @@ void Tile::initializationOfTile(ifstream& input)
 	}
 }
 
-int Tile::getcoordX(const int &position)
+int Tile::getcoordX(int position) const
 {
 	return coordTile[position].getX();
 }
 
-int Tile::getcoordY(const int &position)
+int Tile::getcoordY(int position) const
 {
 	return coordTile[position].getY();
 }
 
-int Tile::getcenterOfTile(const int &position)
+int Tile::getcenterOfTile(int position) const
 {
 	return centerOfTile;
 }
 
-void Tile::setcoordX(const int &position, const int &x)
+void Tile::setcoordX(int position, int x)
 {
 	coordTile[position].setX(x);
 }
 
-void Tile::setcoordY(const int &position, const int &y)
+void Tile::setcoordY(int position, int y)
 {
 	coordTile[position].setY(y);
 }
 
-void Tile::setcenterOfTile(const int &centerOfTile)
+void Tile::setcenterOfTile(int centerOfTile)
 {
 	this->centerOfTile = centerOfTile;
 }
 
-void Tile::moveTileInADirection(char direction)
+void Tile::moveTile(char direction)
 {
 	for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
 	{
-		coordTile[currentCoordinate].moveCoordinatesInADirection(direction);
+		coordTile[currentCoordinate].moveCoordinates(direction);
 	}
 }
 
-void Tile::rotateTileInADirection(char direction)
+void Tile::rotateTile(char direction)
 {
 	int dir = 0;
 
@@ -138,18 +125,18 @@ void Tile::rotateTileInADirection(char direction)
 	}
 }
 
-void Tile::Draw()
+void Tile::draw()
 {
 	for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
 	{
-		coordTile[currentCoordinate].Draw();             // Drawing the tile by drawing every piece (point/coordinate) of it
+		coordTile[currentCoordinate].draw();             // Drawing the tile by drawing every piece (point/coordinate) of it
 	}
 }
 
-void Tile::DeleteDraw()
+void Tile::deleteDraw()
 {
 	for (int currentCoordinate = 0; currentCoordinate < 4; currentCoordinate++)
 	{
-		coordTile[currentCoordinate].DeleteDraw();      // Deleting the tile by deleting every piece (point/coordinate) of it
+		coordTile[currentCoordinate].deleteDraw();      // Deleting the tile by deleting every piece (point/coordinate) of it
 	}
 }

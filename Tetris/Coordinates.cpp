@@ -1,42 +1,30 @@
+#include "Actions.h"
 #include "Coordinates.h"
+#include <iostream>
 
-Coordinates::Coordinates(int x, int y)
-{
-	this->x = x;
-	this->y = y;
-}
+Coordinates::Coordinates(int x, int y) : x(x), y(y) {};
 
-Coordinates& Coordinates::operator=(const Coordinates &coord)
-{
-	if (this != &coord)
-	{
-		this->x = coord.x;
-		this->y = coord.y;
-	}
-	return *this;
-}
-
-int Coordinates::getX()
+int Coordinates::getX() const
 {
 	return x;
 }
 
-int Coordinates::getY()
+int Coordinates::getY() const
 {
 	return y;
 }
 
-void Coordinates::setX(const int &x)
+void Coordinates::setX(int x)
 {
 	this->x = x;
 }
 
-void Coordinates::setY(const int &y)
+void Coordinates::setY(int y)
 {
 	this->y = y;
 }
 
-void Coordinates::moveCoordinatesInADirection(char direction)
+void Coordinates::moveCoordinates(char direction)
 {
 	switch (direction)
 	{
@@ -54,13 +42,13 @@ void Coordinates::moveCoordinatesInADirection(char direction)
 	}
 }
 
-void Coordinates::Draw()
+void Coordinates::draw()
 {
 	MoveTo(x + Drawable::startPositionX, y + Drawable::startPositionY);
 	cout << form;
 }
 
-void Coordinates::DeleteDraw()
+void Coordinates::deleteDraw()
 {
 	MoveTo(x + Drawable::startPositionX, y + Drawable::startPositionY);
 	cout << " ";

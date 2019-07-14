@@ -1,10 +1,13 @@
+#include "Actions.h"
 #include "Tiles.h"
+#include <random>
 
+using namespace std;
 
-int Tiles::numberOfTiles = initializationOfNumberOfTiles();
-Tile* Tiles::figures = initializationOfFigures();
+int Tiles::numberOfTiles = initNumberOfTiles();
+Tile* Tiles::figures = initFigures();
 
-int Tiles::initializationOfNumberOfTiles()
+int Tiles::initNumberOfTiles()
 {
 	int numberOfTiles = 0;
 
@@ -15,7 +18,7 @@ int Tiles::initializationOfNumberOfTiles()
 	return numberOfTiles;
 }
 
-Tile* Tiles::initializationOfFigures()
+Tile* Tiles::initFigures()
 {
 	Tile* figures;
 	int numberOfTiles = 0;
@@ -26,7 +29,7 @@ Tile* Tiles::initializationOfFigures()
 
 	for (int currentTile = 0; currentTile < numberOfTiles; currentTile++)
 	{
-		figures[currentTile].initializationOfTile(input);
+		figures[currentTile].initTile(input);
 	}
 
 	//The center of a line respectively a square is different than the other figures

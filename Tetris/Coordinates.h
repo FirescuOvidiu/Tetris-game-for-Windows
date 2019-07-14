@@ -3,31 +3,32 @@
 #ifndef COORDINATES_H
 #define COORDINATES_H
 
-#include "Actions.h"
 #include "Drawable.h"
-#include <iostream>
 
 using namespace std;
 
 class Coordinates : public Drawable
 {
-private:
-	int x;
-	int y;
+public:
+	Coordinates(int x = 0, int y = 0);
+
+	int getX() const;
+	int getY() const;
+
+	void setX(int x);
+	void setY(int y);
+
+	void moveCoordinates(char direction);
+
+	void draw() override;
+	void deleteDraw() override;
+
 public:
 	static constexpr char form{ '*' };
 
-public:
-	Coordinates(int x = 0, int y = 0);
-	Coordinates& operator =(const Coordinates &coord);
-	int getX();
-	int getY();
-	void setX(const int &x);
-	void setY(const int &y);
-	// Methods using a coordinate
-	void moveCoordinatesInADirection(char direction);
-	void Draw() override;
-	void DeleteDraw() override;
+private:
+	int x;
+	int y;
 };
 
 #endif // !Coordinates_H
