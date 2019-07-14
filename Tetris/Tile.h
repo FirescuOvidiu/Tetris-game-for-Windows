@@ -5,14 +5,15 @@
 
 #include "Coordinates.h"
 #include <fstream>
+#include <vector>
 
 // Class that represents a tileand all its methods
 class Tile : public Drawable
 {
 public:
-	Tile();
+	Tile() : coordTile(4), centerOfTile(-1) {}
 
-	void initTile(ifstream& input);
+	void initTile(std::ifstream& input);
 
 	int getcenterOfTile(int position) const;
 	int getcoordX(int position) const;
@@ -30,7 +31,7 @@ public:
 
 private:
 	// Every tile is composed of 4 coordinates and a center
-	Coordinates coordTile[4];
+	std::vector <Coordinates> coordTile;
 	int centerOfTile;
 };
 

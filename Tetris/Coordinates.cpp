@@ -2,8 +2,6 @@
 #include "Coordinates.h"
 #include <iostream>
 
-Coordinates::Coordinates(int x, int y) : x(x), y(y) {};
-
 int Coordinates::getX() const
 {
 	return x;
@@ -44,12 +42,12 @@ void Coordinates::moveCoordinates(char direction)
 
 void Coordinates::draw()
 {
-	MoveTo(x + Drawable::startPositionX, y + Drawable::startPositionY);
-	cout << form;
+	MoveTo(x + Drawable::startX, y + Drawable::startY);
+	std::cout << form;
 }
 
 void Coordinates::deleteDraw()
 {
-	MoveTo(x + Drawable::startPositionX, y + Drawable::startPositionY);
-	cout << " ";
+	MoveTo(x + Drawable::startX, y + Drawable::startY);
+	std::cout << " ";
 }

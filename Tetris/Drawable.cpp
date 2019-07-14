@@ -1,10 +1,9 @@
 #include "Drawable.h"
 #include <windows.h>
 
-
-int Drawable::getstartPositionX()
+int Drawable::getstartX()
 {
-	return startPositionX;
+	return startX;
 }
 
 void Drawable::hideCursor()
@@ -15,6 +14,6 @@ void Drawable::hideCursor()
 
 void Drawable::MoveTo(int x, int y)
 {
-	COORD coord = { startPositionY + y,startPositionX + x };
+	COORD coord = { startY + y,startX + x };
 	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }

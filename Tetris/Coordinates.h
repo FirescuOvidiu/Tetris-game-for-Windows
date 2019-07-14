@@ -5,12 +5,10 @@
 
 #include "Drawable.h"
 
-using namespace std;
-
 class Coordinates : public Drawable
 {
 public:
-	Coordinates(int x = 0, int y = 0);
+	Coordinates(int x = 0, int y = 0) : x(x), y(y) {}
 
 	int getX() const;
 	int getY() const;

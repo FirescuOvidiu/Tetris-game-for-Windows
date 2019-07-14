@@ -10,9 +10,9 @@ using namespace std;
 
 Table::Table(): score(0)
 {
-	for (int currentLine = 0; currentLine < numLines; currentLine++)
+	for (int currentLine = 0; currentLine < numberOfLines; currentLine++)
 	{
-		for (int currentColumn = 0; currentColumn < numColumns; currentColumn++)
+		for (int currentColumn = 0; currentColumn < numberOfColumns; currentColumn++)
 		{
 			table[currentLine][currentColumn] = 0;
 		}
@@ -53,11 +53,11 @@ void Table::deleteCompletedLines()
 	// We parse the table and check if there is any line with only 1 on it, and than we delete the line
 	int check = 1;
 
-	for (int currentLine = 0; currentLine < numLines; currentLine++)
+	for (int currentLine = 0; currentLine < numberOfLines; currentLine++)
 	{
 		check = 1;
 
-		for (int currentColumn = 0; currentColumn < numColumns; currentColumn++)
+		for (int currentColumn = 0; currentColumn < numberOfColumns; currentColumn++)
 		{
 			if (table[currentLine][currentColumn] == 0)
 			{
@@ -81,7 +81,7 @@ void Table::deleteCompletedLine(int line)
 	// Also we need to draw the actualized lines in the console
 	for (int currentLine = line; currentLine > 0; currentLine--)
 	{
-		for (int currentColumn = 0; currentColumn < numColumns; currentColumn++)
+		for (int currentColumn = 0; currentColumn < numberOfColumns; currentColumn++)
 		{
 			Drawable::MoveTo(currentLine + Drawable::startX, currentColumn + Drawable::startY);
 			if (table[currentLine - 1][currentColumn] == 0)
@@ -96,7 +96,7 @@ void Table::deleteCompletedLine(int line)
 		}
 	}
 
-	for (int currentColumn = 0; currentColumn < numColumns; currentColumn++)
+	for (int currentColumn = 0; currentColumn < numberOfColumns; currentColumn++)
 	{
 		Drawable::MoveTo(0 + Drawable::startX, currentColumn + Drawable::startY);
 		cout << " ";
@@ -200,7 +200,7 @@ void Table::positioningTileAfterRotation()
 			checkOutOfBoundaries = 1;
 		}
 
-		if (actualTile.getcoordY(index) > numColumns - 1)
+		if (actualTile.getcoordY(index) > numberOfColumns - 1)
 		{
 			// passed right boundary of the game table
 			for (int j = 0; j < 4; j++)
@@ -228,7 +228,7 @@ void Table::positioningTileAfterRotation()
 			checkOutOfBoundaries = 1;
 		}
 
-		if ((actualTile.getcoordX(index) > numLines - 1) ||
+		if ((actualTile.getcoordX(index) > numberOfLines - 1) ||
 			(table[actualTile.getcoordX(index)][actualTile.getcoordY(index)] == 1))
 		{
 			// passed the down boundary or reached a possition that is occupied
@@ -279,7 +279,7 @@ void Table::startGame()
 	deleteDraw();
 	draw();
 
-	int numTilesPlayed = 0;
+	int tilesPlayed = 0;
 
 	// This while will end when the player will lose
 	while (true)
@@ -292,12 +292,12 @@ void Table::startGame()
 		{
 			moveTileDown();
 
-			numTilesPlayed++;
-			Difficulty::increaseSpeed(numTilesPlayed);
+			tilesPlayed++;
+			Difficulty::increaseSpeed(tilesPlayed);
 		}
 		else 
 		{
-			Drawable::MoveTo(Drawable::startX + numLines + 1, 0);
+			Drawable::MoveTo(Drawable::startX + numberOfLines + 1, 0);
 			cout << "\n" << "Good job, you made " << score * 1000 << " points.\n";
 			break;
 		}
@@ -307,19 +307,19 @@ void Table::startGame()
 void Table::draw()
 {
 	// Method used to draw the table
-	for (int index = -1; index <= numLines; index++)
+	for (int index = -1; index <= numberOfLines; index++)
 	{
 		MoveTo(Drawable::startX + index, Drawable::startY - 1);
 		cout << char(219);
-		MoveTo(Drawable::startX + index, Drawable::startY + numColumns);
+		MoveTo(Drawable::startX + index, Drawable::startY + numberOfColumns);
 		cout << char(219);
 	}
 
-	for (int index = -1; index <= numColumns; index++)
+	for (int index = -1; index <= numberOfColumns; index++)
 	{
 		Drawable::MoveTo(Drawable::startX - 1, Drawable::startY + index);
 		cout << char(219);
-		Drawable::MoveTo(Drawable::startX + numLines, Drawable::startY + index);
+		Drawable::MoveTo(Drawable::startX + numberOfLines, Drawable::startY + index);
 		cout << char(219);
 	}
 }
@@ -362,7 +362,7 @@ bool Table::checkIfCanMove(char direction) const
 			break;
 			// Check if the player can move right
 		case Action::moveRIGHT:
-			if ((actualTile.getcoordY(i) + 1 > numColumns - 1) ||
+			if ((actualTile.getcoordY(i) + 1 > numberOfColumns - 1) ||
 				((belongsToActualTile(actualTile.getcoordX(i), actualTile.getcoordY(i) + 1)) &&
 				(table[actualTile.getcoordX(i)][actualTile.getcoordY(i) + 1] == 1)))
 			{
@@ -371,7 +371,7 @@ bool Table::checkIfCanMove(char direction) const
 			break;
 			// Check if the player can move down
 		case Action::moveDOWN:
-			if ((actualTile.getcoordX(i) + 1 > numLines - 1) ||
+			if ((actualTile.getcoordX(i) + 1 > numberOfLines - 1) ||
 				((belongsToActualTile(actualTile.getcoordX(i) + 1, actualTile.getcoordY(i))) &&
 				(table[actualTile.getcoordX(i) + 1][actualTile.getcoordY(i)] == 1)))
 			{
