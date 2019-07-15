@@ -4,7 +4,7 @@
 
 int main()
 {
-	Table a;
+	tetris::Table a;
 
 	a.startGame();
 }

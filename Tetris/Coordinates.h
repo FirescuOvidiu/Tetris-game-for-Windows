@@ -5,28 +5,31 @@
 
 #include "Drawable.h"
 
-class Coordinates : public Drawable
+namespace tetris
 {
-public:
-	Coordinates(int x = 0, int y = 0) : x(x), y(y) {}
+	class Coordinates : public Drawable
+	{
+	public:
+		Coordinates(int x = 0, int y = 0) : x(x), y(y) {}
 
-	int getX() const;
-	int getY() const;
+		int getX() const;
+		int getY() const;
 
-	void setX(int x);
-	void setY(int y);
+		void setX(int x);
+		void setY(int y);
 
-	void moveCoordinates(char direction);
+		void moveCoordinates(char direction);
 
-	void draw() override;
-	void deleteDraw() override;
+		void draw() override;
+		void deleteDraw() override;
 
-public:
-	static constexpr char form{ '*' };
+	public:
+		static constexpr char form{ '*' };
 
-private:
-	int x;
-	int y;
-};
+	private:
+		int x;
+		int y;
+	};
 
+}
 #endif // !Coordinates_H

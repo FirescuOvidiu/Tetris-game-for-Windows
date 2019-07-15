@@ -6,19 +6,20 @@
 #include "Tile.h"
 
 // Contains the number of tiles and the tiles possible
-
-class Tiles
+namespace tetris
 {
-public:
-	static Tile generateRandomTile();
+	class Tiles
+	{
+	public:
+		static Tile generateRandomTile();
 
-private:
-	static int initNumberOfTiles();
-	static std::vector<Tile> initFigures();
+	private:
+		static int initNumberOfTiles();
+		static std::vector<Tile> initFigures();
 
-private:
-	static int numberOfTiles;
-	static std::vector<Tile> figures;
-};
-
+	private:
+		static int numberOfTiles;
+		static std::vector<Tile> figures;
+	};
+}
 #endif // !TILES_H
