@@ -8,30 +8,28 @@
 
 namespace tetris
 {
-	using std::cout;
-
 	void Table::gameInfo() const
 	{
 		// General informations about the game and setting the difficulty the player wants to play on
-		cout << "\n\n\n\t This is a tetris game.The controls for the game are:\n";
-		cout << "\n\t a - move the tile left";
-		cout << "\n\t d - move the tile right";
-		cout << "\n\t s - move the tile down";
-		cout << "\n\t e - rotate the tile right";
-		cout << "\n\t q - rotate the tile left";
-		cout << "\n\n\t The game has 3 difficulties: ";
-		cout << "\n\t 1. Easy";
-		cout << "\n\t 2. Normal";
-		cout << "\n\t 3. Hard";
-		cout << "\n\t 4. Impossible";
-		cout << "\n\n\t Introduce the number of the difficulty you want to play on and good luck: ";
+		std::cout << "\n\n\n\t This is a tetris game.The controls for the game are:\n";
+		std::cout << "\n\t a - move the tile left";
+		std::cout << "\n\t d - move the tile right";
+		std::cout << "\n\t s - move the tile down";
+		std::cout << "\n\t e - rotate the tile right";
+		std::cout << "\n\t q - rotate the tile left";
+		std::cout << "\n\n\t The game has 3 difficulties: ";
+		std::cout << "\n\t 1. Easy";
+		std::cout << "\n\t 2. Normal";
+		std::cout << "\n\t 3. Hard";
+		std::cout << "\n\t 4. Impossible";
+		std::cout << "\n\n\t Introduce the number of the difficulty you want to play on and good luck: ";
 
 		char numDifficulty = _getch();
 
 		while ((numDifficulty != '1') && (numDifficulty != '2') &&
 			(numDifficulty != '3') && (numDifficulty != '4'))
 		{
-			cout << "\n\tInsert a number between 1-4: ";
+			std::cout << "\n\tInsert a number between 1-4: ";
 			numDifficulty = _getch();
 		}
 
@@ -76,10 +74,10 @@ namespace tetris
 				Drawable::MoveTo(currentLine + Drawable::startX, currentColumn + Drawable::startY);
 				if (table[currentLine - 1][currentColumn] == 0)
 				{
-					cout << " ";
+					std::cout << " ";
 				}
 				else {
-					cout << Coordinates::form;
+					std::cout << Coordinates::form;
 				}
 
 				table[currentLine][currentColumn] = table[currentLine - 1][currentColumn];
@@ -89,7 +87,7 @@ namespace tetris
 		for (int currentColumn = 0; currentColumn < numberOfColumns; currentColumn++)
 		{
 			Drawable::MoveTo(0 + Drawable::startX, currentColumn + Drawable::startY);
-			cout << " ";
+			std::cout << " ";
 			table[0][currentColumn] = 0;
 		}
 	}
@@ -329,7 +327,7 @@ namespace tetris
 			else
 			{
 				Drawable::MoveTo(Drawable::startX + numberOfLines + 1, 0);
-				cout << "\n" << "Good job, you made " << score * 1000 << " points.\n";
+				std::cout << "\n" << "Good job, you made " << score * 1000 << " points.\n";
 				break;
 			}
 		}
@@ -341,17 +339,17 @@ namespace tetris
 		for (int index = -1; index <= numberOfLines; index++)
 		{
 			MoveTo(Drawable::startX + index, Drawable::startY - 1);
-			cout << char(219);
+			std::cout << char(219);
 			MoveTo(Drawable::startX + index, Drawable::startY + numberOfColumns);
-			cout << char(219);
+			std::cout << char(219);
 		}
 
 		for (int index = -1; index <= numberOfColumns; index++)
 		{
 			Drawable::MoveTo(Drawable::startX - 1, Drawable::startY + index);
-			cout << char(219);
+			std::cout << char(219);
 			Drawable::MoveTo(Drawable::startX + numberOfLines, Drawable::startY + index);
-			cout << char(219);
+			std::cout << char(219);
 		}
 	}
 

@@ -6,10 +6,9 @@
 #include "Drawable.h"
 #include "Tile.h"
 
-// Class that represents the game table 
-
 namespace tetris
 {
+	// Class that represents the game table 
 	class Table : public Drawable
 	{
 	public:

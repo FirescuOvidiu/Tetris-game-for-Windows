@@ -5,9 +5,9 @@
 
 #include "Tile.h"
 
-// Contains the number of tiles and the tiles possible
 namespace tetris
 {
+	// Contains the number of tiles and the tiles possible
 	class Tiles
 	{
 	public:
